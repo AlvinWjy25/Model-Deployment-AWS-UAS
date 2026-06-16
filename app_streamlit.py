@@ -100,9 +100,9 @@ class CreditInferencePipeline:
             probability_class = response.get("probabilities", [0, 0, 0])
 
             prob_dict = {
-                "Poor": probability_class[0],
+                "Good": probability_class[0],
                 "Standard": probability_class[1],
-                "Good": probability_class[2]
+                "Poor": probability_class[2]
             }
             return prediction_class, prob_dict
         
@@ -176,14 +176,17 @@ def main():
             
         st.subheader("Evaluation Result")
         
-        if class_prediction == 0:
+        if class_prediction in [0, "0", "Good", "good"]:
             st.success("### Category: **GOOD CREDIT PERFORMANCE**")
-        elif class_prediction == 1:
+        elif class_prediction in [1, "1", "Standard", "standard"]:
             st.warning("### Category: **STANDARD CREDIT PERFORMANCE**")
         else:
             st.error("### Category: **POOR CREDIT PERFORMANCE (HIGH RISK)**")
             
         st.write("Model Confidence Score:")
+        
+        prob_data = pd.Series(probability_prediction)
+        st.bar_chart(prob_data)
         st.bar_chart(probability_prediction)
         
 
