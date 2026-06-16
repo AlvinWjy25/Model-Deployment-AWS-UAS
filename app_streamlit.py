@@ -104,11 +104,11 @@ class CreditInferencePipeline:
                 "Standard": probability_class[1],
                 "Good": probability_class[2]
             }
-            return self.prediction_class, prob_dict
+            return prediction_class, prob_dict
         
         except Exception as e:
             st.error(f"Gagal menghubungi AWS Endpoint: {e}")
-            traceback(e)
+            traceback.format_exc()
             st.stop()
 
 def main():
