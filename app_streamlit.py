@@ -96,7 +96,7 @@ class CreditInferencePipeline:
         
         try:
             response = invoke_endpoint(payload)
-            prediction_class = response.get("credit_score_prediction", "unknown")
+            prediction_class = response.get("class_index", 2)
             probability_class = response.get("probabilities", [0, 0, 0])
 
             prob_dict = {
